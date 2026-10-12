@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Заявка на пилот или инвестиции от жюри, инвесторов, школ и партнеров",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Уникальный идентификатор заявки"
+        },
+        "name": {
+          "type": "string",
+          "description": "Имя или организация заявителя",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "contact": {
+          "type": "string",
+          "description": "Email или Telegram контакт",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "role": {
+          "type": "string",
+          "description": "Роль заявителя (jury, investor, school, partner, user)",
+          "enum": ["jury", "investor", "school", "partner", "user"]
+        },
+        "interest": {
+          "type": "string",
+          "description": "Цель обращения (pilot, investment, beta, partnership)",
+          "enum": ["pilot", "investment", "beta", "partnership"]
+        },
+        "message": {
+          "type": "string",
+          "description": "Комментарий или описание предложения",
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Временная метка создания заявки"
+        }
+      },
+      "required": ["name", "contact", "role", "interest"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Коллекция заявок на пилотный проект и инвестиции"
+    }
+  }
+}
