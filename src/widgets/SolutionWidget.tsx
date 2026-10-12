@@ -47,7 +47,7 @@ export const SolutionWidget: React.FC = () => {
         <div id="problem" className="mb-20 sm:mb-28 pt-4">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#FFE6F2] text-[#C9005E] border-[2.5px] border-[#0c0d1c] shadow-[0_3px_0_0_#0c0d1c] text-xs font-black uppercase tracking-wider mb-4">
-              Контекст и вызов рынка
+              Проблема
             </span>
             <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black text-[#0c0d1c] tracking-tight mb-4">
               Бесконечная лента забирает время. Но просто запретить её — недостаточно.

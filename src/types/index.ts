@@ -22,7 +22,7 @@ export interface LeadSubmission {
   name: string;
   contact: string;
   role: 'investor' | 'jury' | 'school' | 'partner' | 'user';
-  interest: 'pilot' | 'investment' | 'beta' | 'partnership';
+  interest: 'other' | 'investment' | 'beta' | 'partnership';
   message: string;
   createdAt: string;
   syncedToFirebase?: boolean;

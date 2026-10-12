@@ -131,7 +131,8 @@ export const HeroWidget: React.FC = () => {
                 href="#pilot"
                 className="unscroll-btn-cyan px-6 sm:px-8 py-3.5 sm:py-4 text-base sm:text-lg flex items-center justify-center gap-2.5 cursor-pointer text-center"
               >
-                <span>Запрос на пилот ($131 336)</span>
+                <span>Запрос на пилот</span>
+                <ArrowRight className="w-5 h-5 flex-shrink-0" />
               </a>
             </motion.div>
 

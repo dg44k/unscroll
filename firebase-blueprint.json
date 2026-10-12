@@ -28,8 +28,8 @@
         },
         "interest": {
           "type": "string",
-          "description": "Цель обращения (pilot, investment, beta, partnership)",
-          "enum": ["pilot", "investment", "beta", "partnership"]
+          "description": "Цель обращения (investment, beta, partnership, other)",
+          "enum": ["investment", "beta", "partnership", "other"]
         },
         "message": {
           "type": "string",
