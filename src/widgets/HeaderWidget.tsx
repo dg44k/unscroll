@@ -15,18 +15,18 @@ export const HeaderWidget: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Блокировка скролла при открытии меню
   useEffect(() => {
-    const originalStyle = window.getComputedStyle(document.body).overflow;
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = originalStyle;
+      document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     }
 
     return () => {
-      document.body.style.overflow = originalStyle;
+      document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
@@ -43,19 +43,6 @@ export const HeaderWidget: React.FC = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="lg:hidden fixed inset-0 w-full h-screen bg-[#0c0d1c]/40 backdrop-blur-xs z-40"
-          />
-        )}
-      </AnimatePresence>
-
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || isMobileMenuOpen
@@ -67,10 +54,14 @@ export const HeaderWidget: React.FC = () => {
           <div className="flex items-center justify-between gap-3">
             <a
               href="#"
-              className="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0"
+              className="flex items-center gap-2.5 sm:gap-3 group shrink-0"
             >
-              <div className="w-10 h-10 rounded-2xl flex items-center justify-center">
-                <img src={logo} alt="Логотип" />
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center overflow-hidden">
+                <img
+                  src={logo}
+                  alt="Логотип"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="font-heading text-xl sm:text-2xl font-black tracking-tight text-[#0c0d1c] leading-none">
                 Unscroll
@@ -89,7 +80,7 @@ export const HeaderWidget: React.FC = () => {
               ))}
             </nav>
 
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 z-50">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               <a
                 href="#contact"
                 className="hidden lg:inline-flex items-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl unscroll-btn-pink text-xs sm:text-sm font-black cursor-pointer shadow-[0_4px_0_0_#0c0d1c]"
@@ -99,8 +90,9 @@ export const HeaderWidget: React.FC = () => {
               </a>
 
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 sm:p-2.5 rounded-xl bg-white border-[2.5px] border-[#0c0d1c] shadow-[0_3px_0_0_#0c0d1c] text-[#0c0d1c] cursor-pointer hover:bg-[#FFE6F2] transition-colors"
+                type="button"
+                onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+                className="lg:hidden p-2 sm:p-2.5 rounded-xl bg-white border-[2.5px] border-[#0c0d1c] shadow-[0_3px_0_0_#0c0d1c] text-[#0c0d1c] cursor-pointer hover:bg-[#FFE6F2] transition-colors relative z-50"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
@@ -112,15 +104,26 @@ export const HeaderWidget: React.FC = () => {
             </div>
           </div>
         </div>
+      </header>
 
-        <AnimatePresence>
-          {isMobileMenuOpen && (
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="lg:hidden fixed inset-0 w-full h-full bg-[#0c0d1c]/40 backdrop-blur-xs z-40"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="lg:hidden absolute top-full left-0 right-0 bg-white border-b-[3px] border-[#0c0d1c] shadow-[0_10px_30px_rgba(12,13,28,0.15)] px-4 py-4 overflow-y-auto max-h-[calc(100vh-100%)] z-50"
+              className="lg:hidden fixed top-[60px] left-0 right-0 bg-white border-b-[3px] border-[#0c0d1c] shadow-[0_10px_30px_rgba(12,13,28,0.15)] px-4 py-4 overflow-y-auto max-h-[calc(100vh-60px)] z-40"
             >
               <nav className="flex flex-col gap-1 max-w-lg mx-auto w-full">
                 {navLinks.map((link) => (
@@ -128,7 +131,7 @@ export const HeaderWidget: React.FC = () => {
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-3 py-2 rounded-lg text-sm font-black text-[#0c0d1c] hover:bg-[#FFE6F2] hover:text-[#FF007A] transition-all"
+                    className="px-3 py-2.5 rounded-lg text-sm font-black text-[#0c0d1c] hover:bg-[#FFE6F2] hover:text-[#FF007A] transition-all"
                   >
                     {link.label}
                   </a>
@@ -145,9 +148,9 @@ export const HeaderWidget: React.FC = () => {
                 </a>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
